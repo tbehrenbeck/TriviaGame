@@ -139,7 +139,34 @@
       
     },
       
-
+    // method to evaluate the option clicked
+    guessChecker : function() {
+      
+      var resultId;
+      
+      // the answer to the current question being asked
+      var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
+      
+  
+      if($(this).text() === currentAnswer){
+        $(this).addClass('btn-success').removeClass('btn-info');
+        
+        trivia.correct++;
+        clearInterval(trivia.timerId);
+        resultId = setTimeout(trivia.guessResult, 2500);
+        $('#results').html('<h3>Correct Answer!</h3>');
+      }
+    
+      else{
+        $(this).addClass('btn-danger').removeClass('btn-info');
+        
+        trivia.incorrect++;
+        clearInterval(trivia.timerId);
+        resultId = setTimeout(trivia.guessResult, 2500);
+        $('#results').html('<h3>Better luck next time! '+ currentAnswer +'</h3>');
+      }
+      
+    },
 
 
 
