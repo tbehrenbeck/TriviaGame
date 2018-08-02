@@ -10,6 +10,15 @@
 
 // On the final screen, show the number of correct answers, incorrect answers, and an option to restart the game (without reloading the page).
 
+  $(document).ready(function(){
+    
+    // event listeners
+    $("#remaining-time").hide();
+    $("#start").on('click', trivia.startGame);
+    $(document).on('click' , '.option', trivia.guessChecker);
+    
+  })
+
   var trivia = {
     
     correct: 0,
@@ -22,13 +31,13 @@
 
 
     questions: {
-      q1: 'What causes Phoebe to drop the lottery tickets?',
+      q1: 'What causes Phoebe to drop the bowl of lottery tickets?',
       q2: 'What does Monica receive from her father?',
       q3: 'How many times has Ross been divorced?',
-      q4: 'Where does Chandler tell Janice he is been relocated?',
+      q4: 'Where does Chandler tell Janice he is moving to?',
       q5: 'What dessert did Rachel try to make for Thanksgiving?',
-      q6: 'What causes Chandler to be a "strong, confident woman?',
-      q7: 'What type of bed does Monica accidentally get from the Mattress King?',
+      q6: 'What causes Chandler to be a "strong, confident woman"?',
+      q7: 'What type of bed does Monica accidentally recieve from the Mattress King?',
       q8: 'Where do Phoebe and Mike get married?',
     },
     options: {
@@ -52,5 +61,96 @@
       q8: 'On The Street',
     },
 
+    startGame: function(){
 
-    
+      trivia.currentSet = 0;
+      trivia.correct = 0;
+      trivia.incorrect = 0;
+      trivia.unanswered = 0;
+      clearInterval(trivia.timerId);
+      
+      
+      $('#game').show();
+      $('#results').html('');
+      $('#timer').text(trivia.timer);
+      $('#start').hide();
+      $('#remaining-time').show();
+      
+      trivia.nextQuestion();
+    },
+
+    //display questions and answers 
+    nextQuestion : function(){
+      
+      // set timer to 30 seconds each question
+      trivia.timer = 30;
+      $('#timer').text(trivia.timer);
+
+      
+      if(!trivia.timerOn){
+        trivia.timerId = setInterval(trivia.timerRunning, 1000);
+      }
+      
+      var questionContent = Object.values(trivia.questions)[trivia.currentSet];
+      $('#question').text(questionContent);
+      var questionOptions = Object.values(trivia.options)[trivia.currentSet];
+      
+      // trivia options in the html
+      $.each(questionOptions, function(index, key){
+        $('#options').append($('<button class="option btn btn-info btn-lg m-1">'+key+'</button>'));
+      })
+      
+    },
+
+    timerRunning : function(){
+      // if timer still has time left and there are still questions left to ask
+      if(trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length){
+        $('#timer').text(trivia.timer);
+        trivia.timer--;
+          if(trivia.timer === 4){
+            $('#timer').addClass('last-seconds');
+          }
+      }
+      
+      else if(trivia.timer === -1){
+        trivia.unanswered++;
+        trivia.result = false;
+        clearInterval(trivia.timerId);
+        resultId = setTimeout(trivia.guessResult, 1000);
+        $('#results').html('<h3>Out of time! The answer was '+ Object.values(trivia.answers)[trivia.currentSet] +'</h3>');
+      }
+      
+      else if(trivia.currentSet === Object.keys(trivia.questions).length){
+        
+        
+        $('#results')
+          .html('<h3>Thank you for playing!</h3>'+
+          '<p>Correct: '+ trivia.correct +'</p>'+
+          '<p>Incorrect: '+ trivia.incorrect +'</p>'+
+          '<p>Unaswered: '+ trivia.unanswered +'</p>'+
+          '<p>Please play again!</p>');
+        
+        // hide game sction
+        $('#game').hide();
+        
+        // show start button to begin a new game
+        $('#start').show();
+      }
+      
+    },
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
