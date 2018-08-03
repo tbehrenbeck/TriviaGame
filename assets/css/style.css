@@ -4,7 +4,7 @@ body {
 
 h1 {
     font-size: 3.5rem;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
 }
 
 .lead {
@@ -20,6 +20,14 @@ h1 {
     padding: 20px;
 }
 
+#options {
+    padding-top: 0px;
+}
+
 #remaining-time, #question {
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+}
+
+h3 {
+    text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
 }

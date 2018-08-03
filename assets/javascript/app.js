@@ -28,6 +28,7 @@
     timer: 30,
     timerOn: false,
     timerId : '',
+    answerChosen: false,
 
 
     questions: {
@@ -100,6 +101,7 @@
     //display questions and answers 
     nextQuestion : function(){
       
+      trivia.answerChosen = false,
       // set timer to 30 seconds each question
       trivia.timer = 10;
       $('#timer').text(trivia.timer);
@@ -129,8 +131,8 @@
       }
       
       else if(trivia.timer === -1){
+        trivia.answerChosen =  true;
         trivia.unanswered++;
-        trivia.result = false;
         clearInterval(trivia.timerId);
         resultId = setTimeout(trivia.guessResult, 2500);
         $('#results').html('<h3>Out of time! The answer was '+ Object.values(trivia.answers)[trivia.currentSet] +'</h3>');
@@ -145,10 +147,8 @@
           '<p>Incorrect: '+ trivia.incorrect +'</p>'+
           '<p>Unaswered: '+ trivia.unanswered +'</p>');
         
-        // hide game sction
-        $('#game').hide();
         
-        // show start button to begin a new game
+        $('#game').hide();
         $('#start').show();
       }
       
@@ -157,30 +157,35 @@
     // method to evaluate the option clicked
     guessChecker : function() {
       
-      var resultId;
+      if (!trivia.answerChosen) {
+        trivia.answerChosen = true;
+        var resultId;
       
-      // the answer to the current question being asked
-      var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
-      var currentImage = Object.values(trivia.images)[trivia.currentSet];
-  
-      if($(this).text() === currentAnswer){
-        $(this).addClass('btn-success').removeClass('btn-light');
-        
-        trivia.correct++;
-        clearInterval(trivia.timerId);
-        resultId = setTimeout(trivia.guessResult, 2500);
-        $('#results').html('<h3>Correct Answer!</h3>');
-        $("#restuls").html("<img src=" + currentImage + "'>");
-      }
+        // the answer to the current question being asked
+        var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
+        var currentImage = Object.values(trivia.images)[trivia.currentSet];
     
-      else{
-        $(this).addClass('btn-danger').removeClass('btn-light');
-        
-        trivia.incorrect++;
-        clearInterval(trivia.timerId);
-        resultId = setTimeout(trivia.guessResult, 3000);
-        $('#results').html('<h3>Better luck next time! The correct answer was: '+ currentAnswer + "." +'</h3>');
+        if($(this).text() === currentAnswer){
+          $(this).addClass('btn-success').removeClass('btn-light');
+          
+          trivia.correct++;
+          clearInterval(trivia.timerId);
+          resultId = setTimeout(trivia.guessResult, 2500);
+          $('#results').html('<h3>Correct Answer!</h3>');
+          $("#restuls").html("<img src=" + currentImage + "'>");
+        }
+      
+        else{
+          $(this).addClass('btn-danger').removeClass('btn-light');
+          
+          trivia.incorrect++;
+          clearInterval(trivia.timerId);
+          resultId = setTimeout(trivia.guessResult, 3000);
+          $('#results').html('<h3>Better luck next time! The correct answer was: '+ currentAnswer + "." +'</h3>');
+        }
+        //append images here
       }
+      
       
     },
 
