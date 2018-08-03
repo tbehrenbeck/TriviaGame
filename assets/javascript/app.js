@@ -52,7 +52,7 @@
       q7: ['Race Car Bed', 'Water Bed', 'Princess Bed','Bunk Bed'],
       q8: ['In Central Perk', 'On The Street', 'On The Beach', 'In A Church'],
       q9: ['The World From Far Away', 'A Bird', 'A Coffee Mug', 'The Number 10'],
-      q10: ['Pencils', 'Sticks From A Tree', 'Straws', 'Chopsticks']
+      q10: ['Pencils', 'Sticks From A Tree', 'Straws', 'Chopsticks'],
     },
     answers: {
       q1: 'Pottery Barn',
@@ -65,6 +65,18 @@
       q8: 'On The Street',
       q9: 'The World From Far Away',
       q10: 'Chopsticks'
+    },
+    images: {
+      q1: 'assets/images/TOWTApothecaryTable.png',
+      q2: 'assets/images/TOWTApothecaryTable.png',
+      q3: 'assets/images/TOWTApothecaryTable.png',
+      q4: 'assets/images/TOWTApothecaryTable.png',
+      q5:'assets/images/TOWTApothecaryTable.png',
+      q6: 'assets/images/TOWTApothecaryTable.png',
+      q7: 'assets/images/TOWTApothecaryTable.png',
+      q8: 'assets/images/TOWTApothecaryTable.png',
+      q9: 'assets/images/TOWTApothecaryTable.png',
+      q10: 'assets/images/TOWTApothecaryTable.png',
     },
 
     startGame: function(){
@@ -103,7 +115,7 @@
       
       // trivia options in the html
       $.each(questionOptions, function(index, key){
-        $('#options').append($('<button class="option btn btn-info btn-lg m-1">'+key+'</button>'));
+        $('#options').append($('<button class="option btn btn-light btn-lg m-1">'+key+'</button>'));
       })
       
     },
@@ -113,9 +125,7 @@
       if(trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length){
         $('#timer').text(trivia.timer);
         trivia.timer--;
-          if(trivia.timer === 4){
-            $('#timer').addClass('last-seconds');
-          }
+          
       }
       
       else if(trivia.timer === -1){
@@ -133,8 +143,7 @@
           .html('<h3>Thank you for playing!</h3>'+
           '<p>Correct: '+ trivia.correct +'</p>'+
           '<p>Incorrect: '+ trivia.incorrect +'</p>'+
-          '<p>Unaswered: '+ trivia.unanswered +'</p>'+
-          '<p>Please play again!</p>');
+          '<p>Unaswered: '+ trivia.unanswered +'</p>');
         
         // hide game sction
         $('#game').hide();
@@ -152,24 +161,25 @@
       
       // the answer to the current question being asked
       var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
-      
+      var currentImage = Object.values(trivia.images)[trivia.currentSet];
   
       if($(this).text() === currentAnswer){
-        $(this).addClass('btn-success').removeClass('btn-info');
+        $(this).addClass('btn-success').removeClass('btn-light');
         
         trivia.correct++;
         clearInterval(trivia.timerId);
         resultId = setTimeout(trivia.guessResult, 2500);
         $('#results').html('<h3>Correct Answer!</h3>');
+        $("#restuls").html("<img src=" + currentImage + "'>");
       }
     
       else{
-        $(this).addClass('btn-danger').removeClass('btn-info');
+        $(this).addClass('btn-danger').removeClass('btn-light');
         
         trivia.incorrect++;
         clearInterval(trivia.timerId);
         resultId = setTimeout(trivia.guessResult, 3000);
-        $('#results').html('<h3>Better luck next time! The correct answer was '+ currentAnswer +'</h3>');
+        $('#results').html('<h3>Better luck next time! The correct answer was: '+ currentAnswer + "." +'</h3>');
       }
       
     },

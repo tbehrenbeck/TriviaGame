@@ -1,5 +1,25 @@
 body {
     background-image: url("https://images.pond5.com/holiday-bokeh-twinkling-out-focus-footage-012622877_prevstill.jpeg");
-    
 }
 
+h1 {
+    font-size: 3.5rem;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.lead {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.m-1 {
+    margin: .65rem!important;
+}
+
+#game {
+    padding: 20px;
+}
+
+#remaining-time, #question {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
