@@ -31,34 +31,40 @@
 
 
     questions: {
-      q1: 'What causes Phoebe to drop the bowl of lottery tickets?',
+      q1: 'Which store did Rachel and Ross both buy the same apothecary table from?',
       q2: 'What does Monica receive from her father?',
       q3: 'How many times has Ross been divorced?',
       q4: 'Where does Chandler tell Janice he is moving to?',
       q5: 'What dessert did Rachel try to make for Thanksgiving?',
-      q6: 'What causes Chandler to be a "strong, confident woman"?',
+      q6: 'Which volume of encyclopedia did Joey buy?',
       q7: 'What type of bed does Monica accidentally recieve from the Mattress King?',
       q8: 'Where do Phoebe and Mike get married?',
+      q9: 'Phoebe gets a tattoo. What is it?',
+      q10: 'What is the giant poking device made from?'
     },
     options: {
-      q1: ['Lightning', 'A Pigeon', 'Chandler', 'A Rat'],
-      q2: ['A Dollhouse', 'An Old Trophy', 'Food', 'A Porsche'],
+      q1: ['Crate & Barrel', 'West Elm', 'Pottery Barn', 'Anthropologie'],
+      q2: ['A Dollhouse', 'An Old Trophy', 'Family Videos', 'A Porsche'],
       q3: ['5', '2', '1', '3'],
       q4: ['Yemen', 'Russia', 'Kansas', 'Chicago'],
       q5: ['Souffle','Cookies','Cake','Trifle'],
-      q6: ['Break-Up With Janice','Hanging Out With Rachel','A New Gold Bracelet','Hypnosis Tapes'],
+      q6: ['J','V','Z','X'],
       q7: ['Race Car Bed', 'Water Bed', 'Princess Bed','Bunk Bed'],
       q8: ['In Central Perk', 'On The Street', 'On The Beach', 'In A Church'],
+      q9: ['The World From Far Away', 'A Bird', 'A Coffee Mug', 'The Number 10'],
+      q10: ['Pencils', 'Sticks From A Tree', 'Straws', 'Chopsticks']
     },
     answers: {
-      q1: 'A Pigeon',
+      q1: 'Pottery Barn',
       q2: 'A Porsche',
       q3: '3',
       q4: 'Yemen',
       q5: 'Trifle',
-      q6: 'Hypnosis Tapes',
+      q6: 'V',
       q7: 'Race Car Bed',
       q8: 'On The Street',
+      q9: 'The World From Far Away',
+      q10: 'Chopsticks'
     },
 
     startGame: function(){
@@ -83,7 +89,7 @@
     nextQuestion : function(){
       
       // set timer to 30 seconds each question
-      trivia.timer = 30;
+      trivia.timer = 10;
       $('#timer').text(trivia.timer);
 
       
@@ -116,7 +122,7 @@
         trivia.unanswered++;
         trivia.result = false;
         clearInterval(trivia.timerId);
-        resultId = setTimeout(trivia.guessResult, 1000);
+        resultId = setTimeout(trivia.guessResult, 2500);
         $('#results').html('<h3>Out of time! The answer was '+ Object.values(trivia.answers)[trivia.currentSet] +'</h3>');
       }
       
@@ -162,22 +168,22 @@
         
         trivia.incorrect++;
         clearInterval(trivia.timerId);
-        resultId = setTimeout(trivia.guessResult, 2500);
-        $('#results').html('<h3>Better luck next time! '+ currentAnswer +'</h3>');
+        resultId = setTimeout(trivia.guessResult, 3000);
+        $('#results').html('<h3>Better luck next time! The correct answer was '+ currentAnswer +'</h3>');
       }
       
     },
 
-
-
-
-
-
-
-
-
-
-
-
+    guessResult : function(){
+      
+      trivia.currentSet++;
+      
+      $('.option').remove();
+      $('#results h3').remove();
+      
+      // begin next question
+      trivia.nextQuestion();
+       
+    }
 
   }
