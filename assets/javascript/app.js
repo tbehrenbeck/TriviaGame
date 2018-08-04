@@ -33,7 +33,7 @@
 
     questions: {
       q1: 'Which store did Rachel and Ross both buy the same apothecary table from?',
-      q2: 'What does Monica receive from her father?',
+      q2: 'What does Monica receive from her Dad?',
       q3: 'How many times has Ross been divorced?',
       q4: 'Where does Chandler tell Janice he is moving to?',
       q5: 'What dessert did Rachel try to make for Thanksgiving?',
@@ -69,15 +69,15 @@
     },
     images: {
       q1: 'assets/images/TOWTApothecaryTable.png',
-      q2: 'assets/images/TOWTApothecaryTable.png',
-      q3: 'assets/images/TOWTApothecaryTable.png',
-      q4: 'assets/images/TOWTApothecaryTable.png',
-      q5:'assets/images/TOWTApothecaryTable.png',
-      q6: 'assets/images/TOWTApothecaryTable.png',
-      q7: 'assets/images/TOWTApothecaryTable.png',
-      q8: 'assets/images/TOWTApothecaryTable.png',
-      q9: 'assets/images/TOWTApothecaryTable.png',
-      q10: 'assets/images/TOWTApothecaryTable.png',
+      q2: 'assets/images/car.jpg',
+      q3: 'assets/images/divorce.jpeg',
+      q4: 'assets/images/yemen.jpg',
+      q5:'assets/images/RACHEL-TRIFLE-main-2.jpg',
+      q6: 'assets/images/book.jpg',
+      q7: 'assets/images/bedcar.jpg',
+      q8: 'assets/images/wedding.jpg',
+      q9: 'assets/images/tattoo.jpg',
+      q10: 'assets/images/poking.jpg',
     },
 
     startGame: function(){
@@ -100,6 +100,7 @@
 
     //display questions and answers 
     nextQuestion : function(){
+      $("#results").empty();
       
       trivia.answerChosen = false,
       // set timer to 30 seconds each question
@@ -142,8 +143,7 @@
         
         
         $('#results')
-          .html('<h3>Thank you for playing!</h3>'+
-          '<p>Correct: '+ trivia.correct +'</p>'+
+          .html('<p>Correct: '+ trivia.correct +'</p>'+
           '<p>Incorrect: '+ trivia.incorrect +'</p>'+
           '<p>Unaswered: '+ trivia.unanswered +'</p>');
         
@@ -172,7 +172,7 @@
           clearInterval(trivia.timerId);
           resultId = setTimeout(trivia.guessResult, 2500);
           $('#results').html('<h3>Correct Answer!</h3>');
-          $("#restuls").html("<img src=" + currentImage + "'>");
+          $("#results").append("<img src=" + currentImage + " width='350px'>");
         }
       
         else{
@@ -182,8 +182,8 @@
           clearInterval(trivia.timerId);
           resultId = setTimeout(trivia.guessResult, 3000);
           $('#results').html('<h3>Better luck next time! The correct answer was: '+ currentAnswer + "." +'</h3>');
+          $("#results").append("<img src=" + currentImage + " width='350px'>");
         }
-        //append images here
       }
       
       
